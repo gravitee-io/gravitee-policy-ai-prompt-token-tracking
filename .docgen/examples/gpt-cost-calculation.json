@@ -1,0 +1,11 @@
+{
+    "extraction": {
+        "type": "GPT"
+    },
+    "pricing": {
+        "inputPriceValue": 0.4,
+        "inputPriceUnit": 1000000,
+        "outputPriceValue": 0.8,
+        "outputPriceUnit": 1000000
+    }
+}
