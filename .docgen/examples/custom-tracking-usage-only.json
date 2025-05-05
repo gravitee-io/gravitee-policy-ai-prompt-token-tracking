@@ -1,0 +1,11 @@
+{
+    "extraction": {
+        "type": "CUSTOM",
+        "inputTokenPointer": "/usage/custom_prompt_tokens",
+        "outputTokenPointer": "/usage/custom_completion_tokens",
+        "modelPointer": "/custom_model"
+    },
+    "pricing": {
+        "type": "none"
+    }
+}

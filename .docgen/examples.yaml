@@ -1,0 +1,14 @@
+genExamples: []
+rawExamples:
+    - title: Calculate usage cost for OpenAI ChatGPT API
+      templateRef: v4-api-proxy
+      language: json
+      properties:
+          phase: response
+      file: .docgen/examples/gpt-cost-calculation.json
+    - title: Track tokens usage only on Custom API response
+      templateRef: v4-api-proxy
+      language: json
+      properties:
+          phase: response
+      file: .docgen/examples/custom-tracking-usage-only.json
