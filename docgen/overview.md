@@ -1,0 +1,1 @@
+This policy allows you to keep track of number of token send and receive to/from an AI API.

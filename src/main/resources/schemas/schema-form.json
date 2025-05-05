@@ -1,0 +1,196 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "definitions": {
+        "_inputTokenPointer": {
+            "type": "string",
+            "title": "Sent token count pointer",
+            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token sent to LLM",
+            "default": ""
+        },
+        "_outputTokenPointer": {
+            "type": "string",
+            "title": "Receive token count pointer",
+            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token receive from LLM",
+            "default": ""
+        },
+        "_modelPointer": {
+            "type": "string",
+            "title": "Model pointer",
+            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent model of LLM",
+            "default": ""
+        },
+        "_knownProviders": {
+            "title": "Additional options for request parameters validation",
+            "description": "Uncheck the request parameters that you don't want to validate. (may have an impact on parameter or security validation)",
+            "type": "string",
+            "uniqueItems": true,
+            "items": {
+                "enum": ["CHAT_GPT", "GEMINI", "CLAUDE", "MISTRAL"],
+                "gioConfig": {
+                    "enumLabelMap": {
+                        "CHAT_GPT": "ChatGPT by OpenAI",
+                        "GEMINI": "Gemini by Google",
+                        "CLAUDE": "Claude by Anthropic",
+                        "MISTRAL": "MistralAI"
+                    }
+                }
+            },
+            "default": "CHAT_GPT"
+        },
+        "_pricing": {
+            "title": "Pricing",
+            "description": "Pricing",
+            "type": "object",
+            "properties": {
+                "inputPriceValue": {
+                    "title": "Input Token Price Value",
+                    "description": "Input Token Price Value",
+                    "type": "number"
+                },
+                "inputPriceUnit": {
+                    "title": "Input Token Price Unit",
+                    "description": "Input Token Price Unit",
+                    "type": "number"
+                },
+                "outputPriceValue": {
+                    "title": "Output Token Price Value",
+                    "description": "Output Token Price Value",
+                    "type": "number"
+                },
+                "outputPriceUnit": {
+                    "title": "Output Token Price Unit",
+                    "description": "Output Token Price Unit",
+                    "type": "number"
+                }
+            },
+            "required": ["inputPriceValue", "inputPriceUnit", "outputPriceValue", "outputPriceUnit"]
+        }
+    },
+    "properties": {
+        "extraction": {
+            "type": "object",
+            "title": "HTTP Options",
+            "oneOf": [
+                {
+                    "title": "ChatGPT by OpenAI",
+                    "properties": {
+                        "gptInputTokenPointer": {
+                            "$ref": "#/definitions/_inputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usage/prompt_tokens"
+                        },
+                        "gptOutputTokenPointer": {
+                            "$ref": "#/definitions/_outputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usage/completion_tokens"
+                        },
+                        "gptModelPointer": {
+                            "$ref": "#/definitions/_modelPointer",
+                            "readOnly": true,
+                            "default": "/model"
+                        }
+                    },
+                    "required": ["gptInputTokenPointer", "gptOutputTokenPointer"]
+                },
+                {
+                    "title": "Gemini by Google",
+                    "properties": {
+                        "geminiInputTokenPointer": {
+                            "$ref": "#/definitions/_inputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usage/input_tokens"
+                        },
+                        "geminiOutputTokenPointer": {
+                            "$ref": "#/definitions/_outputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usage/output_tokens"
+                        },
+                        "geminiModelPointer": {
+                            "$ref": "#/definitions/_modelPointer",
+                            "readOnly": true,
+                            "default": "/model"
+                        }
+                    },
+                    "required": ["geminiInputTokenPointer", "geminiOutputTokenPointer"]
+                },
+                {
+                    "title": "Claude by Anthropic",
+                    "properties": {
+                        "claudeInputTokenPointer": {
+                            "$ref": "#/definitions/_inputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usageMetadata/promptTokenCount"
+                        },
+                        "claudeOutputTokenPointer": {
+                            "$ref": "#/definitions/_outputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usageMetadata/candidatesTokenCount"
+                        },
+                        "claudeModelPointer": {
+                            "$ref": "#/definitions/_modelPointer",
+                            "readOnly": true,
+                            "default": "/modelVersion"
+                        }
+                    },
+                    "required": ["claudeInputTokenPointer", "claudeOutputTokenPointer"]
+                },
+                {
+                    "title": "Mistral",
+                    "properties": {
+                        "mistralInputTokenPointer": {
+                            "$ref": "#/definitions/_inputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usage/prompt_tokens"
+                        },
+                        "mistralOutputTokenPointer": {
+                            "$ref": "#/definitions/_outputTokenPointer",
+                            "readOnly": true,
+                            "default": "/usage/completion_tokens"
+                        },
+                        "mistralModelPointer": {
+                            "$ref": "#/definitions/_modelPointer",
+                            "readOnly": true,
+                            "default": "/model"
+                        }
+                    },
+                    "required": ["mistralInputTokenPointer", "mistralOutputTokenPointer"]
+                },
+                {
+                    "title": "Custom provider",
+                    "properties": {
+                        "inputTokenPointer": {
+                            "$ref": "#/definitions/_inputTokenPointer"
+                        },
+                        "outputTokenPointer": {
+                            "$ref": "#/definitions/_outputTokenPointer"
+                        },
+                        "modelPointer": {
+                            "$ref": "#/definitions/_modelPointer"
+                        }
+                    },
+                    "required": ["inputTokenPointer", "outputTokenPointer"]
+                }
+            ]
+        },
+        "pricing": {
+            "title": "Cost",
+            "type": "object",
+            "oneOf": [
+                {
+                    "title": "No cost calculation",
+                    "properties": {}
+                },
+                {
+                    "title": "Pricing",
+                    "properties": {
+                        "pricing": {
+                            "$ref": "#/definitions/_pricing"
+                        }
+                    },
+                    "required": ["pricing"]
+                }
+            ]
+        }
+    }
+}
