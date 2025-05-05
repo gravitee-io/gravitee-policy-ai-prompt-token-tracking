@@ -1,0 +1,135 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema#",
+    "type": "object",
+    "definitions": {
+        "_inputTokenPointer": {
+            "type": "string",
+            "title": "Sent token count pointer",
+            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token sent to LLM",
+            "default": ""
+        },
+        "_outputTokenPointer": {
+            "type": "string",
+            "title": "Receive token count pointer",
+            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token receive from LLM",
+            "default": ""
+        },
+        "_modelPointer": {
+            "type": "string",
+            "title": "Model pointer",
+            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent model of LLM",
+            "default": ""
+        }
+    },
+    "properties": {
+        "extraction": {
+            "type": "object",
+            "title": "Response body parsing",
+            "oneOf": [
+                {
+                    "title": "ChatGPT by OpenAI",
+                    "additionalProperties": false,
+                    "properties": {
+                        "type": {
+                            "const": "GPT"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "Gemini by Google",
+                    "properties": {
+                        "type": {
+                            "const": "GEMINI"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "Claude by Anthropic",
+                    "properties": {
+                        "type": {
+                            "const": "CLAUDE"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "Mistral",
+                    "properties": {
+                        "type": {
+                            "const": "MISTRAL"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "Custom provider",
+                    "properties": {
+                        "type": {
+                            "const": "CUSTOM"
+                        },
+                        "inputTokenPointer": {
+                            "$ref": "#/definitions/_inputTokenPointer"
+                        },
+                        "outputTokenPointer": {
+                            "$ref": "#/definitions/_outputTokenPointer"
+                        },
+                        "modelPointer": {
+                            "$ref": "#/definitions/_modelPointer"
+                        }
+                    },
+                    "required": ["type", "inputTokenPointer", "outputTokenPointer"]
+                }
+            ]
+        },
+        "pricing": {
+            "title": "Cost",
+            "type": "object",
+            "oneOf": [
+                {
+                    "title": "No cost calculation",
+                    "properties": {
+                        "type": {
+                            "const": "none"
+                        }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "title": "Cost calculation",
+                    "properties": {
+                        "type": {
+                            "const": "pricing"
+                        },
+                        "inputPriceValue": {
+                            "title": "Input Token Price Value",
+                            "description": "Input Token Price Value",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        },
+                        "inputPriceUnit": {
+                            "title": "Input Token Price Unit",
+                            "description": "Input Token Price Unit",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        },
+                        "outputPriceValue": {
+                            "title": "Output Token Price Value",
+                            "description": "Output Token Price Value",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        },
+                        "outputPriceUnit": {
+                            "title": "Output Token Price Unit",
+                            "description": "Output Token Price Unit",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    "required": ["inputPriceValue", "inputPriceUnit", "outputPriceValue", "outputPriceUnit"]
+                }
+            ]
+        }
+    }
+}
