@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "https://json-schema.org/draft/2019-09/schema#",
     "type": "object",
     "definitions": {
         "_inputTokenPointer": {
@@ -19,38 +19,6 @@
             "title": "Model pointer",
             "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent model of LLM",
             "default": ""
-        },
-        "_pricing": {
-            "title": "Pricing",
-            "description": "Pricing",
-            "type": "object",
-            "properties": {
-                "inputPriceValue": {
-                    "title": "Input Token Price Value",
-                    "description": "Input Token Price Value",
-                    "type": "number",
-                    "exclusiveMinimum": 0
-                },
-                "inputPriceUnit": {
-                    "title": "Input Token Price Unit",
-                    "description": "Input Token Price Unit",
-                    "type": "number",
-                    "exclusiveMinimum": 0
-                },
-                "outputPriceValue": {
-                    "title": "Output Token Price Value",
-                    "description": "Output Token Price Value",
-                    "type": "number",
-                    "exclusiveMinimum": 0
-                },
-                "outputPriceUnit": {
-                    "title": "Output Token Price Unit",
-                    "description": "Output Token Price Unit",
-                    "type": "number",
-                    "exclusiveMinimum": 0
-                }
-            },
-            "required": ["inputPriceValue", "inputPriceUnit", "outputPriceValue", "outputPriceUnit"]
         }
     },
     "properties": {
@@ -60,6 +28,7 @@
             "oneOf": [
                 {
                     "title": "ChatGPT by OpenAI",
+                    "additionalProperties": false,
                     "properties": {
                         "type": {
                             "const": "GPT"
@@ -128,7 +97,37 @@
                     "required": ["type"]
                 },
                 {
-                    "$ref": "#/definitions/_pricing"
+                    "title": "Cost calculation",
+                    "properties": {
+                        "type": {
+                            "const": "pricing"
+                        },
+                        "inputPriceValue": {
+                            "title": "Input Token Price Value",
+                            "description": "Input Token Price Value",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        },
+                        "inputPriceUnit": {
+                            "title": "Input Token Price Unit",
+                            "description": "Input Token Price Unit",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        },
+                        "outputPriceValue": {
+                            "title": "Output Token Price Value",
+                            "description": "Output Token Price Value",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        },
+                        "outputPriceUnit": {
+                            "title": "Output Token Price Unit",
+                            "description": "Output Token Price Unit",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    "required": ["inputPriceValue", "inputPriceUnit", "outputPriceValue", "outputPriceUnit"]
                 }
             ]
         }
