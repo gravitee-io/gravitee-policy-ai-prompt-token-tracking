@@ -100,14 +100,14 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
 
     private static final String CUSTOM_RESPONSE_WITHOUT_MODEL =
         """
-            {
-                "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
-                "usage": {
-                    "custom_prompt_tokens": 500000,
-                    "custom_completion_tokens": 750000
-                }
+        {
+            "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
+            "usage": {
+                "custom_prompt_tokens": 500000,
+                "custom_completion_tokens": 750000
             }
-            """;
+        }
+        """;
 
     BehaviorSubject<Metrics> metricsSubject;
 

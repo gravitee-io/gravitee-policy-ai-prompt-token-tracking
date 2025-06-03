@@ -108,9 +108,9 @@ Strikethrough text indicates that a version is deprecated.
 #### Response body parsing: Custom provider `type = "CUSTOM"` 
 | Name <br>`json name`  | Type <br>`constraint`  | Mandatory  | Default  | Description  |
 |:----------------------|:-----------------------|:----------:|:---------|:-------------|
-| Sent token count pointer<br>`inputTokenPointer`| string| ✅| | A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token sent to LLM|
-| Model pointer<br>`modelPointer`| string|  | | A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent model of LLM|
-| Receive token count pointer<br>`outputTokenPointer`| string| ✅| | A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token receive from LLM|
+| Sent token count EL<br>`inputTokenPointer`| string| ✅| | A Gravitee Expression Language that represent number of tokens sent to LLM|
+| Model pointer<br>`modelPointer`| string|  | | A Gravitee Expression Language that represent model of LLM|
+| Receive token count EL<br>`outputTokenPointer`| string| ✅| | A Gravitee Expression Language that represent number of tokens receive from LLM|
 
 
 #### Cost (Object)
@@ -227,17 +227,17 @@ Strikethrough text indicates that a version is deprecated.
 
 ## Changelog
 
-## [1.0.0-alpha.2](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.0-alpha.1...1.0.0-alpha.2) (2025-05-26)
+### [1.0.0-alpha.2](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.0-alpha.1...1.0.0-alpha.2) (2025-06-03)
 
 
-#### Bug Fixes
+##### Bug Fixes
 
-* reduce package size using provided scope on dependencies ([58ae671](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/58ae67189b13a2dc5858a1a14d1173d0cba12f46))
+* docs ([ecb41f0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/ecb41f0021b683e19f750e53b8f418febdd4723a))
 
-## 1.0.0-alpha.1 (2025-05-26)
+### 1.0.0-alpha.1 (2025-05-27)
 
 
-#### Features
+##### Features
 
-* extract token sent, received and model of LLM queries ([f13688c](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/f13688ccdeb2f742a898c86d75e36492654540e3))
+* extract token sent, received and model of LLM queries ([04765a1](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/04765a14ad8647f0e870279007211316a8d3a6aa))
 
