@@ -297,4 +297,34 @@ class AiTokenTrackPolicyIntegrationTest {
             send(client, "/custom-token-and-pricing");
         }
     }
+
+    @Nested
+    @GatewayTest
+    @DeployApi({ "/apis/custom-without-model.json" })
+    class CustomWithoutModel extends AbstractAiTokenTrackPolicyIntegrationTest {
+
+        @Test
+        void should_extract_tokens_usage_and_pricing_event_dont_find_model(HttpClient client, VertxTestContext context) {
+            stubBackend(wiremock);
+
+            metricsSubject
+                .doOnNext(metrics ->
+                    assertThat(metrics)
+                        .extracting(Metrics::getAdditionalMetrics)
+                        .isEqualTo(
+                            Map.ofEntries(
+                                Map.entry("long_ai-prompt-token-sent", 500000L),
+                                Map.entry("long_ai-prompt-token-receive", 750000L),
+                                Map.entry("double_ai-prompt-token-sent-cost", 0.2),
+                                Map.entry("double_ai-prompt-token-receive-cost", 0.6)
+                            )
+                        )
+                )
+                .doOnNext(m -> context.completeNow())
+                .doOnError(context::failNow)
+                .subscribe();
+
+            send(client, "/without-model");
+        }
+    }
 }

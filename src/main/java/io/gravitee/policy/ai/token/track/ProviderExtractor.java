@@ -15,46 +15,28 @@
  */
 package io.gravitee.policy.ai.token.track;
 
-import com.fasterxml.jackson.core.JsonPointer;
-import com.fasterxml.jackson.databind.JsonNode;
+import io.gravitee.gateway.reactive.api.context.http.HttpPlainExecutionContext;
 import io.gravitee.policy.ai.token.track.utils.Tokens;
-import java.util.Optional;
+import io.reactivex.rxjava3.core.Maybe;
 import java.util.function.Function;
 
-public sealed interface ProviderExtractor extends Function<JsonNode, Optional<Tokens<Long>>> {
-    record ProviderExtractorTokenOnly(JsonPointer inputTokenPtr, JsonPointer outputTokenPtr) implements ProviderExtractor {
-        public ProviderExtractorTokenOnly(String inputTokenPtr, String outputTokenPtr) {
-            this(JsonPointer.compile(inputTokenPtr), JsonPointer.compile(outputTokenPtr));
-        }
-
+public sealed interface ProviderExtractor extends Function<HttpPlainExecutionContext, Maybe<Tokens<Long>>> {
+    record ProviderExtractorTokenOnly(String inputTokenPtr, String outputTokenPtr) implements ProviderExtractor {
         @Override
-        public Optional<Tokens<Long>> apply(JsonNode jsonNode) {
-            JsonNode inputNode = jsonNode.at(inputTokenPtr);
-            JsonNode outputNode = jsonNode.at(outputTokenPtr);
-            return inputNode.isNumber() && outputNode.isNumber()
-                ? Optional.of(new Tokens.TokensOnly<>(inputNode.asLong(), outputNode.asLong()))
-                : Optional.empty();
+        public Maybe<Tokens<Long>> apply(HttpPlainExecutionContext ctx) {
+            var in = ctx.getTemplateEngine().eval(inputTokenPtr(), Long.class);
+            var out = ctx.getTemplateEngine().eval(outputTokenPtr(), Long.class);
+            return Maybe.zip(in, out, Tokens.TokensOnly::new);
         }
     }
 
-    record ProviderExtractorTokenAndModel(JsonPointer inputTokenPtr, JsonPointer outputTokenPtr, JsonPointer modelPtr)
-        implements ProviderExtractor {
-        public ProviderExtractorTokenAndModel(String inputTokenPtr, String outputTokenPtr, String modelPtr) {
-            this(JsonPointer.compile(inputTokenPtr), JsonPointer.compile(outputTokenPtr), JsonPointer.compile(modelPtr));
-        }
-
+    record ProviderExtractorTokenAndModel(String inputTokenPtr, String outputTokenPtr, String modelPtr) implements ProviderExtractor {
         @Override
-        public Optional<Tokens<Long>> apply(JsonNode jsonNode) {
-            JsonNode inputNode = jsonNode.at(inputTokenPtr);
-            JsonNode outputNode = jsonNode.at(outputTokenPtr);
-            JsonNode modelNode = jsonNode.at(modelPtr);
-            if (inputNode.isNumber() && outputNode.isNumber()) {
-                return modelNode.isTextual()
-                    ? Optional.of(new Tokens.TokensAndModel<>(inputNode.asLong(), outputNode.asLong(), modelNode.asText()))
-                    : Optional.of(new Tokens.TokensOnly<>(inputNode.asLong(), outputNode.asLong()));
-            } else {
-                return Optional.empty();
-            }
+        public Maybe<Tokens<Long>> apply(HttpPlainExecutionContext ctx) {
+            var in = ctx.getTemplateEngine().eval(inputTokenPtr(), Long.class);
+            var out = ctx.getTemplateEngine().eval(outputTokenPtr(), Long.class);
+            var model = ctx.getTemplateEngine().eval(modelPtr(), String.class).defaultIfEmpty("").toMaybe();
+            return Maybe.zip(in, out, model, Tokens::of);
         }
     }
 }

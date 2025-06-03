@@ -20,8 +20,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import io.gravitee.apim.gateway.tests.sdk.AbstractPolicyTest;
-import io.gravitee.apim.gateway.tests.sdk.annotations.DeployApi;
-import io.gravitee.apim.gateway.tests.sdk.annotations.GatewayTest;
 import io.gravitee.apim.gateway.tests.sdk.connector.EndpointBuilder;
 import io.gravitee.apim.gateway.tests.sdk.connector.EntrypointBuilder;
 import io.gravitee.apim.gateway.tests.sdk.reporter.FakeReporter;
@@ -33,12 +31,10 @@ import io.gravitee.policy.ai.token.track.configuration.AiTokenTrackingConfigurat
 import io.gravitee.reporter.api.v4.metric.Metrics;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.vertx.core.http.HttpMethod;
-import io.vertx.junit5.VertxTestContext;
 import io.vertx.rxjava3.core.http.HttpClient;
 import io.vertx.rxjava3.core.http.HttpClientRequest;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTokenTrackPolicy, AiTokenTrackingConfiguration> {
 
@@ -102,6 +98,17 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         }
         """;
 
+    private static final String CUSTOM_RESPONSE_WITHOUT_MODEL =
+        """
+            {
+                "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
+                "usage": {
+                    "custom_prompt_tokens": 500000,
+                    "custom_completion_tokens": 750000
+                }
+            }
+            """;
+
     BehaviorSubject<Metrics> metricsSubject;
 
     @BeforeEach
@@ -110,8 +117,8 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
 
         FakeReporter fakeReporter = getBean(FakeReporter.class);
         fakeReporter.setReportableHandler(reportable -> {
-            if (reportable instanceof Metrics) {
-                metricsSubject.onNext((Metrics) reportable);
+            if (reportable instanceof Metrics metrics) {
+                metricsSubject.onNext(metrics);
             }
         });
     }
@@ -122,6 +129,7 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         wiremock.stubFor(WireMock.post("/claude").willReturn(WireMock.jsonResponse(CLAUDE_RESPONSE, 200)));
         wiremock.stubFor(WireMock.post("/mistral").willReturn(WireMock.jsonResponse(MISTRAL_RESPONSE, 200)));
         wiremock.stubFor(WireMock.post("/custom").willReturn(WireMock.jsonResponse(CUSTOM_RESPONSE, 200)));
+        wiremock.stubFor(WireMock.post("/without-model").willReturn(WireMock.jsonResponse(CUSTOM_RESPONSE_WITHOUT_MODEL, 200)));
     }
 
     protected void send(HttpClient client, String path) {

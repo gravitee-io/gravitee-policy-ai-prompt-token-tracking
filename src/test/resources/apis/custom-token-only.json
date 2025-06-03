@@ -59,9 +59,9 @@
                     "configuration": {
                         "extraction": {
                             "type": "CUSTOM",
-                            "inputTokenPointer": "/usage/custom_prompt_tokens",
-                            "outputTokenPointer": "/usage/custom_completion_tokens",
-                            "modelPointer": "/custom_model"
+                            "inputTokenPointer": "{#response.jsonContent.usage.custom_prompt_tokens}",
+                            "outputTokenPointer": "{#response.jsonContent.usage.custom_completion_tokens}",
+                            "modelPointer": "{#response.jsonContent.custom_model}"
                         },
                         "pricing": {
                             "type": "none"
