@@ -1,3 +1,10 @@
+# [1.0.0-alpha.2](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.0-alpha.1...1.0.0-alpha.2) (2025-06-03)
+
+
+### Bug Fixes
+
+* docs ([ecb41f0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/ecb41f0021b683e19f750e53b8f418febdd4723a))
+
 # 1.0.0-alpha.1 (2025-05-27)
 
 
