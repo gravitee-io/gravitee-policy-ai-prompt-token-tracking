@@ -1,3 +1,10 @@
+# [1.0.0-alpha.3](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.0-alpha.2...1.0.0-alpha.3) (2025-06-03)
+
+
+### Features
+
+* use EL instead of JSON pointer to extrat data ([56eec52](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/56eec523c5ad0025fa64c85620d33f4f889aba24))
+
 # [1.0.0-alpha.2](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.0-alpha.1...1.0.0-alpha.2) (2025-06-03)
 
 
