@@ -18,10 +18,30 @@ package io.gravitee.policy.ai.token.track.configuration;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ExtractorType {
-    GPT("GPT", "/usage/prompt_tokens", "/usage/completion_tokens", "/model"),
-    GEMINI("GEMINI", "/usage/input_tokens", "/usage/output_tokens", "/model"),
-    CLAUDE("CLAUDE", "/usageMetadata/promptTokenCount", "/usageMetadata/candidatesTokenCount", "/modelVersion"),
-    MISTRAL("MISTRAL", "/usage/prompt_tokens", "/usage/completion_tokens", "/model"),
+    GPT(
+        "GPT",
+        "{#response.jsonContent.usage.prompt_tokens}",
+        "{#response.jsonContent.usage.completion_tokens}",
+        "{#response.jsonContent.model}"
+    ),
+    GEMINI(
+        "GEMINI",
+        "{#response.jsonContent.usage.input_tokens}",
+        "{#response.jsonContent.usage.output_tokens}",
+        "{#response.jsonContent.model}"
+    ),
+    CLAUDE(
+        "CLAUDE",
+        "{#response.jsonContent.usageMetadata.promptTokenCount}",
+        "{#response.jsonContent.usageMetadata.candidatesTokenCount}",
+        "{#response.jsonContent.modelVersion}"
+    ),
+    MISTRAL(
+        "MISTRAL",
+        "{#response.jsonContent.usage.prompt_tokens}",
+        "{#response.jsonContent.usage.completion_tokens}",
+        "{#response.jsonContent.model}"
+    ),
     CUSTOM("CUSTOM", null, null, null);
 
     @JsonValue

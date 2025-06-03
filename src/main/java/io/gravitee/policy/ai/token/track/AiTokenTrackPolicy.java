@@ -15,17 +15,13 @@
  */
 package io.gravitee.policy.ai.token.track;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import io.gravitee.common.http.MediaType;
-import io.gravitee.gateway.api.buffer.Buffer;
 import io.gravitee.gateway.api.http.HttpHeaderNames;
 import io.gravitee.gateway.reactive.api.context.http.HttpPlainExecutionContext;
 import io.gravitee.gateway.reactive.api.policy.http.HttpPolicy;
 import io.gravitee.policy.ai.token.track.configuration.AiTokenTrackingConfiguration;
 import io.gravitee.policy.ai.token.track.utils.Tokens;
 import io.reactivex.rxjava3.core.Completable;
-import java.io.IOException;
 import java.util.List;
 
 public class AiTokenTrackPolicy implements HttpPolicy {
@@ -45,28 +41,29 @@ public class AiTokenTrackPolicy implements HttpPolicy {
 
     @Override
     public Completable onResponse(HttpPlainExecutionContext ctx) {
-        return ctx.response().body().doOnSuccess(content -> extracted(content, ctx)).ignoreElement();
+        return ctx.response().body().flatMapCompletable(content -> extracted(ctx));
     }
 
-    private void extracted(Buffer content, HttpPlainExecutionContext ctx) throws IOException {
+    private Completable extracted(HttpPlainExecutionContext ctx) {
         if (!isJsonBody(ctx)) {
-            return;
+            return Completable.complete();
         }
-        JsonNode jsonNode = JsonMapper.builder().build().readValue(content.getBytes(), JsonNode.class);
-        var extractedData = providerExtractor.apply(jsonNode);
-        extractedData.ifPresent(data -> {
-            ctx.metrics().putAdditionalMetric("long_ai-prompt-token-sent", data.input());
-            ctx.metrics().putAdditionalMetric("long_ai-prompt-token-receive", data.output());
-            if (data instanceof Tokens.TokensAndModel<?> tokensAndModel) {
-                ctx.metrics().putAdditionalKeywordMetric("keyword_ai-prompt-token-model", tokensAndModel.model());
-            }
-            configuration
-                .getCost(data)
-                .ifPresent(cost -> {
-                    ctx.metrics().putAdditionalMetric("double_ai-prompt-token-sent-cost", cost.input());
-                    ctx.metrics().putAdditionalMetric("double_ai-prompt-token-receive-cost", cost.output());
-                });
-        });
+        var extractedData = providerExtractor.apply(ctx);
+        return extractedData
+            .doOnSuccess(data -> {
+                ctx.metrics().putAdditionalMetric("long_ai-prompt-token-sent", data.input());
+                ctx.metrics().putAdditionalMetric("long_ai-prompt-token-receive", data.output());
+                if (data instanceof Tokens.TokensAndModel<?> tokensAndModel) {
+                    ctx.metrics().putAdditionalKeywordMetric("keyword_ai-prompt-token-model", tokensAndModel.model());
+                }
+                configuration
+                    .getCost(data)
+                    .ifPresent(cost -> {
+                        ctx.metrics().putAdditionalMetric("double_ai-prompt-token-sent-cost", cost.input());
+                        ctx.metrics().putAdditionalMetric("double_ai-prompt-token-receive-cost", cost.output());
+                    });
+            })
+            .ignoreElement();
     }
 
     private static boolean isJsonBody(HttpPlainExecutionContext ctx) {

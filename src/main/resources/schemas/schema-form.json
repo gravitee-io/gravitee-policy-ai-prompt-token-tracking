@@ -4,20 +4,20 @@
     "definitions": {
         "_inputTokenPointer": {
             "type": "string",
-            "title": "Sent token count pointer",
-            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token sent to LLM",
+            "title": "Sent token count EL",
+            "description": "A Gravitee Expression Language that represent number of tokens sent to LLM",
             "default": ""
         },
         "_outputTokenPointer": {
             "type": "string",
-            "title": "Receive token count pointer",
-            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent number of token receive from LLM",
+            "title": "Receive token count EL",
+            "description": "A Gravitee Expression Language that represent number of tokens receive from LLM",
             "default": ""
         },
         "_modelPointer": {
             "type": "string",
             "title": "Model pointer",
-            "description": "A pointer (https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-03) on the json field that represent model of LLM",
+            "description": "A Gravitee Expression Language that represent model of LLM",
             "default": ""
         }
     },
