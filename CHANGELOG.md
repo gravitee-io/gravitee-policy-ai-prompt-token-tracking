@@ -1,3 +1,10 @@
+# [1.0.0-alpha.4](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.0-alpha.3...1.0.0-alpha.4) (2025-06-12)
+
+
+### Bug Fixes
+
+* **deps:** bump apim-bom to 4.8.0-alpha.2 ([d67d112](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/d67d1120685691c9ccfba71dccf16210082eecfe))
+
 # [1.0.0-alpha.3](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.0-alpha.2...1.0.0-alpha.3) (2025-06-03)
 
 
