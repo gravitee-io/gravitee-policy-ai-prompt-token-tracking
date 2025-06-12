@@ -19,10 +19,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import io.gravitee.apim.gateway.tests.sdk.annotations.DeployApi;
 import io.gravitee.apim.gateway.tests.sdk.annotations.GatewayTest;
+import io.gravitee.reporter.api.v4.metric.AdditionalMetric;
 import io.gravitee.reporter.api.v4.metric.Metrics;
 import io.vertx.junit5.VertxTestContext;
 import io.vertx.rxjava3.core.http.HttpClient;
+import java.util.List;
 import java.util.Map;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -41,12 +44,11 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "gpt-4")
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gpt-4")
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -64,14 +66,13 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "gpt-4"),
-                                Map.entry("double_ai-prompt-token-sent-cost", 0.2),
-                                Map.entry("double_ai-prompt-token-receive-cost", 0.6)
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gpt-4"),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -95,12 +96,11 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "gemini-2")
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gemini-2")
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -118,14 +118,13 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "gemini-2"),
-                                Map.entry("double_ai-prompt-token-sent-cost", 0.2),
-                                Map.entry("double_ai-prompt-token-receive-cost", 0.6)
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gemini-2"),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -149,12 +148,11 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "claude-3")
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "claude-3")
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -172,14 +170,13 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "claude-3"),
-                                Map.entry("double_ai-prompt-token-sent-cost", 0.2),
-                                Map.entry("double_ai-prompt-token-receive-cost", 0.6)
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "claude-3"),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -203,12 +200,11 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "mistral-1")
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "mistral-1")
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -226,14 +222,13 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "mistral-1"),
-                                Map.entry("double_ai-prompt-token-sent-cost", 0.2),
-                                Map.entry("double_ai-prompt-token-receive-cost", 0.6)
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "mistral-1"),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -257,12 +252,11 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "custom-1")
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "custom-1")
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -280,14 +274,13 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("keyword_ai-prompt-token-model", "custom-1"),
-                                Map.entry("double_ai-prompt-token-sent-cost", 0.2),
-                                Map.entry("double_ai-prompt-token-receive-cost", 0.6)
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "custom-1"),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
                 .doOnNext(m -> context.completeNow())
@@ -311,13 +304,12 @@ class AiTokenTrackPolicyIntegrationTest {
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
-                        .isEqualTo(
-                            Map.ofEntries(
-                                Map.entry("long_ai-prompt-token-sent", 500000L),
-                                Map.entry("long_ai-prompt-token-receive", 750000L),
-                                Map.entry("double_ai-prompt-token-sent-cost", 0.2),
-                                Map.entry("double_ai-prompt-token-receive-cost", 0.6)
-                            )
+                        .asInstanceOf(InstanceOfAssertFactories.SET)
+                        .containsExactlyInAnyOrder(
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
                 .doOnNext(m -> context.completeNow())
