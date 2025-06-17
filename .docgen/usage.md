@@ -1,4 +1,4 @@
-Here are some examples of how to use the {{ .Plugin.Title }}.
+Here are some examples for how to use the {{ .Plugin.Title }}.
 
 ### Built-in support for OpenAI, Gemini, Claude, and Mistral
 
@@ -8,11 +8,11 @@ The plugin has built-in support for the following AI providers:
 - Anthropic (Claude)
 - Mistral
 
-Simply select the appropriate type in the configuration, and the plugin will handle the token tracking automatically.
+Select the appropriate type in the configuration, and the plugin handles the token tracking automatically.
 
 ### Custom Provider
 
-When the API provider is not one of the built-in ones, you can use the `CUSTOM` type. In this case, you need to provide a custom response body parsing configuration that matches the structure of the API responses from your provider.
+When the API provider is not one of the built-in providers, use the `CUSTOM` type. When you choose the `CUSTOM`, you must provide a custom response body parsing configuration that matches the structure of the API responses from your provider.
 
 For example, the following configuration can be used to extract tokens usage and model from a custom AI API response:
 
