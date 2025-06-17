@@ -23,7 +23,7 @@
 
     <groupId>io.gravitee.policy</groupId>
     <artifactId>gravitee-policy-ai-prompt-token-tracking</artifactId>
-    <version>0.0.1-alpha.1</version>
+    <version>1.0.0-alpha.1</version>
     <description>Tracks and calculates costs for input and output tokens when proxying requests to LLMs</description>
 
     <parent>
