@@ -15,7 +15,7 @@
  */
 package io.gravitee.policy.ai.token.track;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -29,6 +29,7 @@ import io.gravitee.plugin.entrypoint.EntrypointConnectorPlugin;
 import io.gravitee.plugin.entrypoint.http.proxy.HttpProxyEntrypointConnectorFactory;
 import io.gravitee.policy.ai.token.track.configuration.AiTokenTrackingConfiguration;
 import io.gravitee.reporter.api.v4.metric.Metrics;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.rxjava3.core.http.HttpClient;
@@ -119,6 +120,7 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         fakeReporter.setReportableHandler(reportable -> {
             if (reportable instanceof Metrics metrics) {
                 metricsSubject.onNext(metrics);
+                metricsSubject.onComplete();
             }
         });
     }
@@ -132,12 +134,12 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         wiremock.stubFor(WireMock.post("/without-model").willReturn(WireMock.jsonResponse(CUSTOM_RESPONSE_WITHOUT_MODEL, 200)));
     }
 
-    protected void send(HttpClient client, String path) {
-        client
+    protected Completable send(HttpClient client, String path) {
+        return client
             .rxRequest(HttpMethod.POST, path)
             .flatMap(HttpClientRequest::rxSend)
-            .doOnSuccess(response -> assertThat(response.statusCode()).isEqualTo(200))
-            .subscribe();
+            .map(response -> assertThat(response.statusCode()).isEqualTo(200))
+            .ignoreElement();
     }
 
     @Override

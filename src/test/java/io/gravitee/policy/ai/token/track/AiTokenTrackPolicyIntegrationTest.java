@@ -15,16 +15,15 @@
  */
 package io.gravitee.policy.ai.token.track;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import io.gravitee.apim.gateway.tests.sdk.annotations.DeployApi;
 import io.gravitee.apim.gateway.tests.sdk.annotations.GatewayTest;
 import io.gravitee.reporter.api.v4.metric.AdditionalMetric;
 import io.gravitee.reporter.api.v4.metric.Metrics;
+import io.reactivex.rxjava3.core.Completable;
 import io.vertx.junit5.VertxTestContext;
 import io.vertx.rxjava3.core.http.HttpClient;
-import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,7 @@ class AiTokenTrackPolicyIntegrationTest {
         void should_extract_tokens_usage_from_gpt_response(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -51,18 +50,18 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gpt-4")
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/gpt-token-only");
+            var clientAsserts = send(client, "/gpt-token-only");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
 
         @Test
         void should_extract_tokens_usage_and_pricing_from_gpt_response(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -75,11 +74,11 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/gpt-token-and-pricing");
+            var clientAsserts = send(client, "/gpt-token-and-pricing");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
     }
 
@@ -92,7 +91,7 @@ class AiTokenTrackPolicyIntegrationTest {
         void should_extract_tokens_usage(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -103,18 +102,18 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gemini-2")
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/gemini-token-only");
+            var clientAsserts = send(client, "/gemini-token-only");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
 
         @Test
         void should_extract_tokens_usage_and_pricing(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -127,11 +126,11 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/gemini-token-and-pricing");
+            var clientAsserts = send(client, "/gemini-token-and-pricing");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
     }
 
@@ -144,7 +143,7 @@ class AiTokenTrackPolicyIntegrationTest {
         void should_extract_tokens_usage(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -155,18 +154,18 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "claude-3")
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/claude-token-only");
+            var clientAsserts = send(client, "/claude-token-only");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
 
         @Test
         void should_extract_tokens_usage_and_pricing(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -179,11 +178,11 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/claude-token-and-pricing");
+            var clientAsserts = send(client, "/claude-token-and-pricing");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
     }
 
@@ -196,7 +195,7 @@ class AiTokenTrackPolicyIntegrationTest {
         void should_extract_tokens_usage(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -207,18 +206,18 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "mistral-1")
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/mistral-token-only");
+            var clientAsserts = send(client, "/mistral-token-only");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
 
         @Test
         void should_extract_tokens_usage_and_pricing(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -231,11 +230,11 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/mistral-token-and-pricing");
+            var clientAsserts = send(client, "/mistral-token-and-pricing");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
     }
 
@@ -248,7 +247,7 @@ class AiTokenTrackPolicyIntegrationTest {
         void should_extract_tokens_usage(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -259,18 +258,18 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "custom-1")
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/custom-token-only");
+            var clientAsserts = send(client, "/custom-token-only");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
 
         @Test
         void should_extract_tokens_usage_and_pricing(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
+            var metricsAsserts = metricsSubject
                 .doOnNext(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
@@ -283,11 +282,11 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/custom-token-and-pricing");
+            var clientAsserts = send(client, "/custom-token-and-pricing");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
     }
 
@@ -300,8 +299,8 @@ class AiTokenTrackPolicyIntegrationTest {
         void should_extract_tokens_usage_and_pricing_event_dont_find_model(HttpClient client, VertxTestContext context) {
             stubBackend(wiremock);
 
-            metricsSubject
-                .doOnNext(metrics ->
+            var metricsAsserts = metricsSubject
+                .map(metrics ->
                     assertThat(metrics)
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
@@ -312,11 +311,55 @@ class AiTokenTrackPolicyIntegrationTest {
                             new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
                         )
                 )
-                .doOnNext(m -> context.completeNow())
-                .doOnError(context::failNow)
-                .subscribe();
+                .ignoreElements();
 
-            send(client, "/without-model");
+            var clientAsserts = send(client, "/without-model");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
         }
+    }
+
+    @Nested
+    @GatewayTest
+    @DeployApi({ "/apis/claude-token-and-pricing-bad-el.json" })
+    class BadConfig extends AbstractAiTokenTrackPolicyIntegrationTest {
+
+        @Test
+        void should_extract_tokens_usage_and_pricing_event_dont_find_model(HttpClient client, VertxTestContext context) {
+            stubBackend(wiremock);
+
+            var metricsAsserts = metricsSubject
+                .doOnNext(metrics ->
+                    assertThat(metrics.getAdditionalMetrics())
+                        .extracting(AdditionalMetric::name)
+                        .doesNotContain(
+                            "long_ai-prompt-token-sent",
+                            "long_ai-prompt-token-receive",
+                            "double_ai-prompt-token-sent-cost",
+                            "double_ai-prompt-token-receive-cost"
+                        )
+                )
+                .ignoreElements();
+
+            var clientAsserts = send(client, "/gpt-token-and-pricing");
+
+            finalAssert(context, metricsAsserts, clientAsserts);
+        }
+    }
+
+    private static void finalAssert(VertxTestContext context, Completable metricsAsserts, Completable clientAsserts) {
+        Completable
+            .mergeArray(metricsAsserts, clientAsserts)
+            .doOnComplete(context::completeNow)
+            .doFinally(context::completeNow)
+            .doOnTerminate(context::completeNow)
+            .doOnEvent(e -> {
+                if (e == null) {
+                    context.completeNow();
+                } else {
+                    context.failNow(e);
+                }
+            })
+            .subscribe();
     }
 }

@@ -24,8 +24,8 @@ public sealed interface ProviderExtractor extends Function<HttpPlainExecutionCon
     record ProviderExtractorTokenOnly(String inputTokenPtr, String outputTokenPtr) implements ProviderExtractor {
         @Override
         public Maybe<Tokens<Long>> apply(HttpPlainExecutionContext ctx) {
-            var in = ctx.getTemplateEngine().eval(inputTokenPtr(), Long.class);
-            var out = ctx.getTemplateEngine().eval(outputTokenPtr(), Long.class);
+            var in = ctx.getTemplateEngine().eval(inputTokenPtr(), Long.class).onErrorComplete();
+            var out = ctx.getTemplateEngine().eval(outputTokenPtr(), Long.class).onErrorComplete();
             return Maybe.zip(in, out, Tokens.TokensOnly::new);
         }
     }
@@ -33,9 +33,9 @@ public sealed interface ProviderExtractor extends Function<HttpPlainExecutionCon
     record ProviderExtractorTokenAndModel(String inputTokenPtr, String outputTokenPtr, String modelPtr) implements ProviderExtractor {
         @Override
         public Maybe<Tokens<Long>> apply(HttpPlainExecutionContext ctx) {
-            var in = ctx.getTemplateEngine().eval(inputTokenPtr(), Long.class);
-            var out = ctx.getTemplateEngine().eval(outputTokenPtr(), Long.class);
-            var model = ctx.getTemplateEngine().eval(modelPtr(), String.class).defaultIfEmpty("").toMaybe();
+            var in = ctx.getTemplateEngine().eval(inputTokenPtr(), Long.class).onErrorComplete();
+            var out = ctx.getTemplateEngine().eval(outputTokenPtr(), Long.class).onErrorComplete();
+            var model = ctx.getTemplateEngine().eval(modelPtr(), String.class).onErrorComplete().defaultIfEmpty("").toMaybe();
             return Maybe.zip(in, out, model, Tokens::of);
         }
     }
