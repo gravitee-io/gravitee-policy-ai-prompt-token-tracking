@@ -1,0 +1,79 @@
+{
+    "id": "config-claude-endpoint-openai",
+    "name": "config-claude-endpoint-openai",
+    "apiVersion": "1.0",
+    "definitionVersion": "4.0.0",
+    "type": "proxy",
+    "analytics": {},
+    "description": "subscribe-assign-metrics",
+    "listeners": [
+        {
+            "type": "http",
+            "paths": [
+                {
+                    "path": "/gpt-token-and-pricing"
+                }
+            ],
+            "entrypoints": [
+                {
+                    "type": "http-proxy"
+                }
+            ]
+        }
+    ],
+    "endpointGroups": [
+        {
+            "name": "default",
+            "type": "http-proxy",
+            "endpoints": [
+                {
+                    "name": "default",
+                    "type": "http-proxy",
+                    "weight": 1,
+                    "inheritConfiguration": false,
+                    "configuration": {
+                        "target": "http://localhost:8080/claude"
+                    }
+                }
+            ]
+        }
+    ],
+    "flows": [
+        {
+            "name": "flow-1",
+            "enabled": true,
+            "selectors": [
+                {
+                    "type": "http",
+                    "path": "/",
+                    "pathOperator": "STARTS_WITH"
+                }
+            ],
+            "request": [],
+            "response": [
+                {
+                    "name": "AI Token Track",
+                    "description": "",
+                    "enabled": true,
+                    "policy": "ai-prompt-token-tracking",
+                    "configuration": {
+                        "extraction": {
+                            "type": "CUSTOM",
+                            "inputTokenPointer": "{#response.jsonContent.bad.custom_prompt_tokens}",
+                            "outputTokenPointer": "{#response.jsonContent.bad.custom_completion_tokens}",
+                            "modelPointer": "{#response.jsonContent.bad|custom_model}"
+                        },
+                        "pricing": {
+                            "inputPriceValue": 0.4,
+                            "inputPriceUnit": "1000000",
+                            "outputPriceValue": 0.8,
+                            "outputPriceUnit": "1000000"
+                        }
+                    }
+                }
+            ],
+            "subscribe": [],
+            "publish": []
+        }
+    ]
+}
