@@ -6,19 +6,28 @@
             "type": "string",
             "title": "Sent token count EL",
             "description": "A Gravitee Expression Language that represent number of tokens sent to LLM",
-            "default": ""
+            "default": "",
+            "gioConfig": {
+                "el": true
+            }
         },
         "_outputTokenPointer": {
             "type": "string",
             "title": "Receive token count EL",
             "description": "A Gravitee Expression Language that represent number of tokens receive from LLM",
-            "default": ""
+            "default": "",
+            "gioConfig": {
+                "el": true
+            }
         },
         "_modelPointer": {
             "type": "string",
             "title": "Model pointer",
             "description": "A Gravitee Expression Language that represent model of LLM",
-            "default": ""
+            "default": "",
+            "gioConfig": {
+                "el": true
+            }
         }
     },
     "properties": {
