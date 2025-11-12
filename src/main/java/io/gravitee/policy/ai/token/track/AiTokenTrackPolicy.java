@@ -15,7 +15,6 @@
  */
 package io.gravitee.policy.ai.token.track;
 
-import io.gravitee.common.http.MediaType;
 import io.gravitee.gateway.api.http.HttpHeaderNames;
 import io.gravitee.gateway.reactive.api.context.http.HttpPlainExecutionContext;
 import io.gravitee.gateway.reactive.api.policy.http.HttpPolicy;
@@ -23,6 +22,7 @@ import io.gravitee.policy.ai.token.track.configuration.AiTokenTrackingConfigurat
 import io.gravitee.policy.ai.token.track.utils.Tokens;
 import io.reactivex.rxjava3.core.Completable;
 import java.util.List;
+import java.util.Locale;
 
 public class AiTokenTrackPolicy implements HttpPolicy {
 
@@ -72,6 +72,6 @@ public class AiTokenTrackPolicy implements HttpPolicy {
             .headers()
             .getOrDefault(HttpHeaderNames.CONTENT_TYPE, List.of())
             .stream()
-            .anyMatch(MediaType.APPLICATION_JSON::equals);
+            .anyMatch(s -> s.toLowerCase(Locale.ROOT).contains("json"));
     }
 }
