@@ -51,16 +51,16 @@ public class AiTokenTrackPolicy implements HttpPolicy {
         var extractedData = providerExtractor.apply(ctx);
         return extractedData
             .doOnSuccess(data -> {
-                ctx.metrics().putAdditionalMetric("long_ai-prompt-token-sent", data.input());
-                ctx.metrics().putAdditionalMetric("long_ai-prompt-token-receive", data.output());
+                ctx.metrics().putAdditionalMetric("long_llm-proxy_tokens-sent", data.input());
+                ctx.metrics().putAdditionalMetric("long_llm-proxy_tokens-received", data.output());
                 if (data instanceof Tokens.TokensAndModel<?> tokensAndModel) {
-                    ctx.metrics().putAdditionalKeywordMetric("keyword_ai-prompt-token-model", tokensAndModel.model());
+                    ctx.metrics().putAdditionalKeywordMetric("keyword_llm-proxy_model", tokensAndModel.model());
                 }
                 configuration
                     .getCost(data)
                     .ifPresent(cost -> {
-                        ctx.metrics().putAdditionalMetric("double_ai-prompt-token-sent-cost", cost.input());
-                        ctx.metrics().putAdditionalMetric("double_ai-prompt-token-receive-cost", cost.output());
+                        ctx.metrics().putAdditionalMetric("double_llm-proxy_sent-cost", cost.input());
+                        ctx.metrics().putAdditionalMetric("double_llm-proxy_received-cost", cost.output());
                     });
             })
             .ignoreElement();

@@ -45,9 +45,9 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gpt-4")
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "gpt-4")
                         )
                 )
                 .ignoreElements();
@@ -67,11 +67,11 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gpt-4"),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "gpt-4"),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_received-cost", 0.6)
                         )
                 )
                 .ignoreElements();
@@ -97,9 +97,9 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gemini-2")
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "gemini-2")
                         )
                 )
                 .ignoreElements();
@@ -119,11 +119,11 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "gemini-2"),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "gemini-2"),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_received-cost", 0.6)
                         )
                 )
                 .ignoreElements();
@@ -149,9 +149,9 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "claude-3")
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "claude-3")
                         )
                 )
                 .ignoreElements();
@@ -171,11 +171,11 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "claude-3"),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "claude-3"),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_received-cost", 0.6)
                         )
                 )
                 .ignoreElements();
@@ -201,9 +201,9 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "mistral-1")
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "mistral-1")
                         )
                 )
                 .ignoreElements();
@@ -223,11 +223,11 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "mistral-1"),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "mistral-1"),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_received-cost", 0.6)
                         )
                 )
                 .ignoreElements();
@@ -253,9 +253,9 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "custom-1")
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "custom-1")
                         )
                 )
                 .ignoreElements();
@@ -275,11 +275,11 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.KeywordMetric("keyword_ai-prompt-token-model", "custom-1"),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.KeywordMetric("keyword_llm-proxy_model", "custom-1"),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_received-cost", 0.6)
                         )
                 )
                 .ignoreElements();
@@ -305,10 +305,10 @@ class AiTokenTrackPolicyIntegrationTest {
                         .extracting(Metrics::getAdditionalMetrics)
                         .asInstanceOf(InstanceOfAssertFactories.SET)
                         .containsExactlyInAnyOrder(
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-sent", 500000L),
-                            new AdditionalMetric.LongMetric("long_ai-prompt-token-receive", 750000L),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-sent-cost", 0.2),
-                            new AdditionalMetric.DoubleMetric("double_ai-prompt-token-receive-cost", 0.6)
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-sent", 500000L),
+                            new AdditionalMetric.LongMetric("long_llm-proxy_tokens-received", 750000L),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_sent-cost", 0.2),
+                            new AdditionalMetric.DoubleMetric("double_llm-proxy_received-cost", 0.6)
                         )
                 )
                 .ignoreElements();
@@ -333,10 +333,10 @@ class AiTokenTrackPolicyIntegrationTest {
                     assertThat(metrics.getAdditionalMetrics())
                         .extracting(AdditionalMetric::name)
                         .doesNotContain(
-                            "long_ai-prompt-token-sent",
-                            "long_ai-prompt-token-receive",
-                            "double_ai-prompt-token-sent-cost",
-                            "double_ai-prompt-token-receive-cost"
+                            "long_llm-proxy_tokens-sent",
+                            "long_llm-proxy_tokens-received",
+                            "double_llm-proxy_sent-cost",
+                            "double_llm-proxy_received-cost"
                         )
                 )
                 .ignoreElements();
