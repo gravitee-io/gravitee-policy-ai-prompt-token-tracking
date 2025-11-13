@@ -227,6 +227,18 @@ Strikethrough text indicates that a version is deprecated.
 
 ## Changelog
 
+### [1.2.0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.1.0...1.2.0) (2025-11-13)
+
+
+##### Bug Fixes
+
+* relaxe the Content-Type check to handle more cases ([c8c57f0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/c8c57f0770274f4d68288822ce428d19fe2f1d9c))
+
+
+##### Features
+
+* allign metrics naming on llm proxy ([a53be09](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/a53be09f81b3aaaf14c091bc30aa6518cbb0bb6f))
+
 ### [1.1.0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.0.1...1.1.0) (2025-08-27)
 
 
