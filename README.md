@@ -66,7 +66,8 @@ Strikethrough text indicates that a version is deprecated.
 
 | Plugin version| APIM| Java version |
 | --- | --- | ---  |
-|1.0.0 and after|4.8.x and after|21 |
+|1.x|4.8.x and 4.9.x|21 |
+|2.x and after|4.10.x and after|21 |
 
 
 ## Configuration options
@@ -226,6 +227,18 @@ Strikethrough text indicates that a version is deprecated.
 
 
 ## Changelog
+
+### [2.0.0-alpha.1](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.2.0...2.0.0-alpha.1) (2025-12-09)
+
+
+##### Features
+
+* make the policy compatible with 4.10 ([20c5c20](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/20c5c206947a290888f3a3ca7aced1460e97a345))
+
+
+##### BREAKING CHANGES
+
+* requires 4.10
 
 ### [1.2.0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.1.0...1.2.0) (2025-11-13)
 
