@@ -228,6 +228,18 @@ Strikethrough text indicates that a version is deprecated.
 
 ## Changelog
 
+### [2.0.0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.2.0...2.0.0) (2025-12-15)
+
+
+##### Features
+
+* make the policy compatible with 4.10 ([5cfa0cf](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/commit/5cfa0cf4b84a9e2644482cf178f662e9e85bdde6))
+
+
+##### BREAKING CHANGES
+
+* requires 4.10
+
 ### [1.2.0](https://github.com/gravitee-io/gravitee-policy-ai-prompt-token-tracking/compare/1.1.0...1.2.0) (2025-11-13)
 
 
