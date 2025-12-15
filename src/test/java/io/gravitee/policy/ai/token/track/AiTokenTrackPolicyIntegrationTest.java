@@ -348,8 +348,7 @@ class AiTokenTrackPolicyIntegrationTest {
     }
 
     private static void finalAssert(VertxTestContext context, Completable metricsAsserts, Completable clientAsserts) {
-        Completable
-            .mergeArray(metricsAsserts, clientAsserts)
+        Completable.mergeArray(metricsAsserts, clientAsserts)
             .doOnComplete(context::completeNow)
             .doFinally(context::completeNow)
             .doOnTerminate(context::completeNow)
