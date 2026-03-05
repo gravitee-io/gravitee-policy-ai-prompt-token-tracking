@@ -21,8 +21,8 @@ public record PricingConfiguration(Double inputPriceValue, Double inputPriceUnit
     public Tokens<Double> cost(Tokens<Long> tokens) {
         // inputPriceUnit & outputPriceUnit can't be 0 due to the schema.
         return new Tokens.TokensOnly<>(
-            tokens.input() * inputPriceValue / inputPriceUnit,
-            tokens.output() * outputPriceValue / outputPriceUnit
+            (tokens.input() * inputPriceValue) / inputPriceUnit,
+            (tokens.output() * outputPriceValue) / outputPriceUnit
         );
     }
 }

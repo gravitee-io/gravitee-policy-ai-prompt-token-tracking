@@ -41,7 +41,10 @@ public class AiTokenTrackPolicy implements HttpPolicy {
 
     @Override
     public Completable onResponse(HttpPlainExecutionContext ctx) {
-        return ctx.response().body().flatMapCompletable(content -> extracted(ctx));
+        return ctx
+            .response()
+            .body()
+            .flatMapCompletable(content -> extracted(ctx));
     }
 
     private Completable extracted(HttpPlainExecutionContext ctx) {
