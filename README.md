@@ -68,6 +68,7 @@ Strikethrough text indicates that a version is deprecated.
 | --- | --- | ---  |
 |1.x|4.8.x and 4.9.x|21 |
 |2.x and after|4.10.x and after|21 |
+|3.x|4.11.x|21 |
 
 
 ## Configuration options
