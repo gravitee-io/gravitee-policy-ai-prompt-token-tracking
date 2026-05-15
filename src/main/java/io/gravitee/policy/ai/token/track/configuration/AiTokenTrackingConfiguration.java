@@ -20,8 +20,8 @@ import io.gravitee.policy.ai.token.track.utils.Tokens;
 import io.gravitee.policy.api.PolicyConfiguration;
 import java.util.Optional;
 
-public record AiTokenTrackingConfiguration(ProviderExtractorConfiguration extraction, PricingConfiguration pricing)
-    implements PolicyConfiguration {
+public record AiTokenTrackingConfiguration(ProviderExtractorConfiguration extraction, PricingConfiguration pricing) implements
+    PolicyConfiguration {
     public ProviderExtractor toProviderExtractor() {
         return extraction.toProviderExtractor();
     }
@@ -29,13 +29,13 @@ public record AiTokenTrackingConfiguration(ProviderExtractorConfiguration extrac
     public Optional<Tokens<Double>> getCost(Tokens<Long> tokens) {
         // Hard to write a simple schema form to have a null pricing configuration. So as a workaround we check that all
         // attributes are not null.
-        return Optional
-            .ofNullable(pricing)
-            .filter(pricing ->
-                pricing.inputPriceValue() != null &&
-                pricing.inputPriceUnit() != null &&
-                pricing.outputPriceValue() != null &&
-                pricing.outputPriceUnit() != null
+        return Optional.ofNullable(pricing)
+            .filter(
+                pricing ->
+                    pricing.inputPriceValue() != null &&
+                    pricing.inputPriceUnit() != null &&
+                    pricing.outputPriceValue() != null &&
+                    pricing.outputPriceUnit() != null
             )
             .map(pricing -> pricing.cost(tokens));
     }
