@@ -39,8 +39,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTokenTrackPolicy, AiTokenTrackingConfiguration> {
 
-    private static final String GPT_RESPONSE =
-        """
+    private static final String GPT_RESPONSE = """
         {
             "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
             "model": "gpt-4",
@@ -51,8 +50,7 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         }
         """;
 
-    private static final String GEMINI_RESPONSE =
-        """
+    private static final String GEMINI_RESPONSE = """
         {
             "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
             "model": "gemini-2",
@@ -63,8 +61,7 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         }
         """;
 
-    private static final String CLAUDE_RESPONSE =
-        """
+    private static final String CLAUDE_RESPONSE = """
         {
             "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
             "modelVersion": "claude-3",
@@ -75,8 +72,7 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         }
         """;
 
-    private static final String MISTRAL_RESPONSE =
-        """
+    private static final String MISTRAL_RESPONSE = """
         {
             "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
             "model": "mistral-1",
@@ -87,8 +83,7 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         }
         """;
 
-    private static final String CUSTOM_RESPONSE =
-        """
+    private static final String CUSTOM_RESPONSE = """
         {
             "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
             "custom_model": "custom-1",
@@ -99,8 +94,7 @@ class AbstractAiTokenTrackPolicyIntegrationTest extends AbstractPolicyTest<AiTok
         }
         """;
 
-    private static final String CUSTOM_RESPONSE_WITHOUT_MODEL =
-        """
+    private static final String CUSTOM_RESPONSE_WITHOUT_MODEL = """
         {
             "id": "chatcmpl-7e1a2d4f-0b3c-4c5e-bb8f-6a2d9e3f1a2d",
             "usage": {
